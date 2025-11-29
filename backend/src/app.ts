@@ -6,6 +6,7 @@ import { empresaRouter } from './routes/empresa.routes';
 import { vagaRouter } from './routes/vaga.routes';
 import { candidaturaRouter } from './routes/candidatura.routes';
 import { adminRouter } from './routes/admin.routes';
+import { catalogoRouter } from './routes/catalogo.routes';
 import { errorHandler } from './middleware/errorHandler';
 
 export const app = express();
@@ -18,5 +19,6 @@ app.use('/empresas', empresaRouter);
 app.use('/vagas', vagaRouter);
 app.use('/candidaturas', candidaturaRouter);
 app.use('/admin', adminRouter);
+app.use('/catalogo', catalogoRouter);
 
 app.use(errorHandler);

@@ -46,10 +46,7 @@ export default function Admin() {
   const [salvando, setSalvando] = useState<string | null>(null);
   const [empresas, setEmpresas] = useState<Empresa[]>([]);
   const [loadingEmpresas, setLoadingEmpresas] = useState(false);
-  const hasToken = useMemo(
-    () => !!localStorage.getItem('token_admin') || !!localStorage.getItem('token_usuario') || !!localStorage.getItem('token_empresa'),
-    [],
-  );
+  const hasToken = useMemo(() => !!localStorage.getItem('token_admin'), []);
   const [catalogo, setCatalogo] = useState<any>({ deficiencias: [], acessibilidades: [] });
   const [loadingCatalogo, setLoadingCatalogo] = useState(false);
   const [openTipo, setOpenTipo] = useState<string | null>(null);
@@ -96,7 +93,7 @@ export default function Admin() {
       carregarPendentes();
       carregarCatalogo();
     }
-  }, []);
+  }, [hasToken]);
 
   const handleSave = async (resource: ResourceConfig) => {
     const payload = formValues[resource.key];

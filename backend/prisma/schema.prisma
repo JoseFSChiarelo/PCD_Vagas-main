@@ -125,3 +125,47 @@ model VagaUsuario {
 
   @@id([id_vaga, id_usuario])
 }
+
+model DeficienciaCatalogo {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  descricao String?
+  createdAt DateTime @default(now())
+  barreiras BarreiraCatalogo[]
+}
+
+model BarreiraCatalogo {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  descricao     String?
+  deficienciaId Int
+  deficiencia   DeficienciaCatalogo @relation(fields: [deficienciaId], references: [id])
+  createdAt     DateTime @default(now())
+  subtipos      SubtipoBarreiraCatalogo[]
+}
+
+model SubtipoBarreiraCatalogo {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  descricao  String?
+  barreiraId Int
+  barreira   BarreiraCatalogo @relation(fields: [barreiraId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model AcessibilidadeCatalogo {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  descricao String?
+  createdAt DateTime @default(now())
+  subtipos  SubtipoAcessibilidadeCatalogo[]
+}
+
+model SubtipoAcessibilidadeCatalogo {
+  id               Int      @id @default(autoincrement())
+  nome             String
+  descricao        String?
+  acessibilidadeId Int
+  acessibilidade   AcessibilidadeCatalogo @relation(fields: [acessibilidadeId], references: [id])
+  createdAt        DateTime @default(now())
+}
