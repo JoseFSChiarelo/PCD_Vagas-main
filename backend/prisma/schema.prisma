@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Escolaridade {
+  FUNDAMENTAL
+  MEDIO
+  SUPERIOR
+  MESTRADO
+  DOUTORADO
+}
+
+enum Sexo {
+  MASCULINO
+  FEMININO
+  PREFERE_NAO_INFORMAR
+}
+
+enum TipoVaga {
+  REMOTA
+  HIBRIDA
+  PRESENCIAL
+}
+
+enum StatusVaga {
+  ATIVO
+  EXPIRADO
+  DESATIVADO
+}
+
+enum TipoDeficiencia {
+  FISICA
+  AUDITIVA
+  VISUAL
+  INTELECTUAL
+  PSICOSOCIAL
+  MULTIPLA
+  OUTRA
+}
+
+model Usuario {
+  id_usuario              Int                @id @default(autoincrement())
+  cpf                     String             @unique
+  email                   String             @unique
+  celular                 String
+  nome                    String
+  nascimento              DateTime
+  sexo                    Sexo
+  escolaridade            Escolaridade
+  tipo_deficiencia        TipoDeficiencia
+  subtipo_deficiencia     String
+  barreiras               String             
+  acessibilidades_necessarias String
+  buscando_emprego        Boolean            @default(true)
+  cep                     String
+  cidade                  String
+  estado                  String
+  senha                   String
+
+  candidaturas            VagaUsuario[]
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+}
+
+model Empresa {
+  id_empresa Int      @id @default(autoincrement())
+  cnpj       String   @unique
+  nome       String
+  email      String   @unique
+  telefone   String
+  descricao  String
+  cep        String
+  cidade     String
+  estado     String
+  senha      String
+
+  vagas      Vaga[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Vaga {
+  id_vaga             Int          @id @default(autoincrement())
+  titulo              String
+  descricao           String
+  beneficios          String?
+  deficiencias_compativeis String[]
+  tipo_vaga           TipoVaga
+  salario             String?
+  acessibilidades_oferecidas String?
+  data_fechamento     DateTime?
+  cidade              String?
+  estado              String?
+  status              StatusVaga   @default(ATIVO)
+  empresaId           Int
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  // novo campo
+  escolaridade_minima Escolaridade @default(FUNDAMENTAL)
+
+  empresa             Empresa      @relation(fields: [empresaId], references: [id_empresa])
+  candidatos          VagaUsuario[]
+}
+model VagaUsuario {
+  id_vaga     Int
+  id_usuario  Int
+  createdAt   DateTime @default(now())
+
+  vaga        Vaga     @relation(fields: [id_vaga], references: [id_vaga])
+  usuario     Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+
+  @@id([id_vaga, id_usuario])
+}
