@@ -11,12 +11,13 @@ import Vagas from './pages/Vagas'
 import VagaDetalhe from './pages/VagaDetalhe'
 import DashboardUsuario from './pages/DashboardUsuario'
 import DashboardEmpresa from './pages/DashboardEmpresa'
+import Admin from './pages/Admin'
 
 export default function App() {
   return (
-    <div className="pt-16 pb-12 min-h-screen">
+    <div className="min-h-screen pb-16">
       <Header />
-      <main className="container mt-6">
+      <main className="container pt-24 space-y-10">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/usuario/login" element={<LoginUsuario />} />
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/vaga/:id" element={<VagaDetalhe />} />
           <Route path="/usuario/dashboard" element={<DashboardUsuario />} />
           <Route path="/empresa/dashboard" element={<DashboardEmpresa />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
       <Footer />

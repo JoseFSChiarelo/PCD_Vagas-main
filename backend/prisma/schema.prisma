@@ -85,6 +85,7 @@ model Empresa {
   cidade     String
   estado     String
   senha      String
+  aprovada   Boolean  @default(false)
 
   vagas      Vaga[]
   createdAt  DateTime @default(now())

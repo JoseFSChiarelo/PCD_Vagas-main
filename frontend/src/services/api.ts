@@ -6,9 +6,10 @@ export const api = axios.create({
 
 // Interceptor para JWT
 api.interceptors.request.use((config) => {
+  const tokenAdmin = localStorage.getItem('token_admin');
   const tokenUser = localStorage.getItem('token_usuario');
   const tokenCompany = localStorage.getItem('token_empresa');
-  const token = tokenUser || tokenCompany;
+  const token = tokenAdmin || tokenUser || tokenCompany;
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });

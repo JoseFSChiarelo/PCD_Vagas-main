@@ -18,7 +18,15 @@ export const authService = {
     if (!e) throw { status: 401, message: 'Credenciais inválidas' };
     const ok = await comparePassword(senha, e.senha);
     if (!ok) throw { status: 401, message: 'Credenciais inválidas' };
+    if (!e.aprovada) throw { status: 403, message: 'Empresa aguardando aprovação' };
     const token = jwt.sign({ type: 'empresa', id: e.id_empresa, nome: e.nome }, env.jwtSecret, { expiresIn: '7d' });
     return { token, empresa: { id: e.id_empresa, nome: e.nome, email: e.email } };
+  },
+  loginAdmin: async (email: string, senha: string) => {
+    const validEmail = email === env.adminEmail;
+    const validSenha = senha === env.adminSenha;
+    if (!validEmail || !validSenha) throw { status: 401, message: 'Credenciais inválidas' };
+    const token = jwt.sign({ type: 'admin', email }, env.jwtSecret, { expiresIn: '7d' });
+    return { token, admin: { email } };
   },
 };

@@ -4,4 +4,6 @@ export const empresaRepo = {
   findByEmail: (email: string) => prisma.empresa.findUnique({ where: { email } }),
   findById: (id: number) => prisma.empresa.findUnique({ where: { id_empresa: id } }),
   update: (id: number, data: any) => prisma.empresa.update({ where: { id_empresa: id }, data }),
+  listarPendentes: () => prisma.empresa.findMany({ where: { aprovada: false } }),
+  aprovar: (id: number) => prisma.empresa.update({ where: { id_empresa: id }, data: { aprovada: true } }),
 };
