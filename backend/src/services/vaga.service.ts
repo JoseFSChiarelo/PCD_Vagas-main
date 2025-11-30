@@ -1,5 +1,6 @@
 import { vagaRepo } from '../repositories/vaga.repository';
-import { StatusVaga, TipoVaga } from '@prisma/client';
+import { StatusVaga } from '@prisma/client';
+import { usuarioRepo } from '../repositories/usuario.repository';
 
 export const vagaService = {
   publicar: async (empresaId: number, data: any) => {
@@ -17,4 +18,9 @@ export const vagaService = {
   },
   listarPublicas: async () => vagaRepo.listPublic(),
   listarEmpresa: async (empresaId: number) => vagaRepo.listByEmpresa(empresaId),
+  listarCompativeis: async (usuarioId: number) => {
+    const usuario = await usuarioRepo.findById(usuarioId);
+    if (!usuario) return [];
+    return vagaRepo.listCompatByTipo(usuario.tipo_deficiencia);
+  },
 };

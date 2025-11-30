@@ -1,5 +1,5 @@
 import { prisma } from '../config/prisma';
-import { StatusVaga, TipoVaga } from '@prisma/client';
+import { StatusVaga, TipoDeficiencia } from '@prisma/client';
 
 export const vagaRepo = {
   create: (data: any) => prisma.vaga.create({ data }),
@@ -17,4 +17,27 @@ export const vagaRepo = {
     }
   },
   listByEmpresa: (empresaId: number) => prisma.vaga.findMany({ where: { empresaId } }),
+  listCompatByTipo: (tipo: TipoDeficiencia) =>
+    prisma.vaga.findMany({
+      where: {
+        status: StatusVaga.ATIVO,
+        deficiencias_compativeis: { has: tipo },
+        OR: [{ data_fechamento: null }, { data_fechamento: { gt: new Date() } }],
+      },
+      select: {
+        id_vaga: true,
+        titulo: true,
+        tipo_vaga: true,
+        cidade: true,
+        estado: true,
+        salario: true,
+        beneficios: true,
+        escolaridade_minima: true,
+        acessibilidades_oferecidas: true,
+        deficiencias_compativeis: true,
+        status: true,
+        empresa: { select: { nome: true, cidade: true, estado: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
 };

@@ -1,6 +1,6 @@
 export const escolaridadeOptions = [
   { label: 'Fundamental', value: 'FUNDAMENTAL' },
-  { label: 'Médio', value: 'MEDIO' },
+  { label: 'Medio', value: 'MEDIO' },
   { label: 'Superior', value: 'SUPERIOR' },
   { label: 'Mestrado', value: 'MESTRADO' },
   { label: 'Doutorado', value: 'DOUTORADO' },
@@ -9,22 +9,22 @@ export const escolaridadeOptions = [
 export const sexoOptions = [
   { value: 'MASCULINO', label: 'Masculino' },
   { value: 'FEMININO', label: 'Feminino' },
-  { value: 'NAO_BINARIO', label: 'Não binário' },
-  { value: 'PREFERE_NAO_INFORMAR', label: 'Prefere não informar' },
+  { value: 'NAO_BINARIO', label: 'Nao binario' },
+  { value: 'PREFERE_NAO_INFORMAR', label: 'Prefere nao informar' },
 ];
 
 export const deficienciaOptions = [
-  { value: 'FISICA', label: 'Física' },
+  { value: 'FISICA', label: 'Fisica' },
   { value: 'AUDITIVA', label: 'Auditiva' },
   { value: 'VISUAL', label: 'Visual' },
   { value: 'INTELECTUAL', label: 'Intelectual' },
   { value: 'PSICOSOCIAL', label: 'Psicossocial' },
-  { value: 'MULTIPLA', label: 'Múltipla' },
+  { value: 'MULTIPLA', label: 'Multipla' },
   { value: 'OUTRA', label: 'Outra' },
 ];
 
 export const tipoVagaOptions = [
   { value: 'REMOTA', label: 'Remota' },
-  { value: 'HIBRIDA', label: 'Híbrida' },
+  { value: 'HIBRIDA', label: 'Hibrida' },
   { value: 'PRESENCIAL', label: 'Presencial' },
 ];

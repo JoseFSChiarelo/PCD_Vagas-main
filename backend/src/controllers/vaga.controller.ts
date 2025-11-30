@@ -24,9 +24,14 @@ export const vagaController = {
     const vagas = await vagaService.listarPublicas();
     res.json(vagas);
   },
+  listarCompativeis: async (req: Request, res: Response) => {
+    const usuarioId = (req as any).user.id;
+    const vagas = await vagaService.listarCompativeis(usuarioId);
+    res.json(vagas);
+  },
   detalhar: async (req: Request, res: Response) => {
     const vaga = await vagaService.detalhar(Number(req.params.id));
-    if (!vaga || vaga.status !== 'ATIVO') return res.status(404).json({ error: 'Vaga não encontrada' });
+    if (!vaga || vaga.status !== 'ATIVO') return res.status(404).json({ error: 'Vaga nao encontrada' });
     res.json(vaga);
   },
   listarEmpresa: async (req: Request, res: Response) => {
